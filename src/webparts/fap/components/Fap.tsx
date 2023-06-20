@@ -1,46 +1,41 @@
 import * as React from 'react';
-import styles from './Fap.module.scss';
+// import styles from './Fap.module.scss';
 import { IFapProps } from './IFapProps';
-import { escape } from '@microsoft/sp-lodash-subset';
+// import { escape } from '@microsoft/sp-lodash-subset';
+import { FC, useEffect, useState } from 'react';
+import styles from './Fap.module.scss';
+// import {
+//   SPHttpClient,
+//   SPHttpClientResponse
+// } from '@microsoft/sp-http';
 
-export default class Fap extends React.Component<IFapProps, {}> {
-  public render(): React.ReactElement<IFapProps> {
-    const {
-      description,
-      isDarkTheme,
-      environmentMessage,
-      hasTeamsContext,
-      userDisplayName,
-      test,
-    } = this.props;
-
-    return (
-      <section className={`${styles.fap} ${hasTeamsContext ? styles.teams : ''}`}>
-        <div className={styles.welcome}>
-          <img alt="" src={isDarkTheme ? require('../assets/welcome-dark.png') : require('../assets/welcome-light.png')} className={styles.welcomeImage} />
-          <h2>Well done, {escape(userDisplayName)}!</h2>
-          <div>{environmentMessage}</div>
-          <div>Web part property value: <strong>{escape(description)}</strong></div>
-          asdasdasd22222222
-          <p>${escape(test ? 'tttttttttt' : 'ffffffffff')}</p>
-        </div>
-        <div>
-          <h3>Welcome to SharePoint Framework!</h3>
-          <p>
-            The SharePoint Framework (SPFx) is a extensibility model for Microsoft Viva, Microsoft Teams and SharePoint. It&#39;s the easiest way to extend Microsoft 365 with automatic Single Sign On, automatic hosting and industry standard tooling.
-          </p>
-          <h4>Learn more about SPFx development:</h4>
-          <ul className={styles.links}>
-            <li><a href="https://aka.ms/spfx" target="_blank" rel="noreferrer">SharePoint Framework Overview</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-graph" target="_blank" rel="noreferrer">Use Microsoft Graph in your solution</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-teams" target="_blank" rel="noreferrer">Build for Microsoft Teams using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-viva" target="_blank" rel="noreferrer">Build for Microsoft Viva Connections using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-store" target="_blank" rel="noreferrer">Publish SharePoint Framework applications to the marketplace</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-api" target="_blank" rel="noreferrer">SharePoint Framework API reference</a></li>
-            <li><a href="https://aka.ms/m365pnp" target="_blank" rel="noreferrer">Microsoft 365 Developer Community</a></li>
-          </ul>
-        </div>
-      </section>
-    );
-  }
+export interface ISPLists {
+  value: ISPList[];
 }
+
+export interface ISPList {
+  id: string;
+  title: string;
+}
+
+const list: ISPList[] = [
+  {id: '1', title: 'Admin and Tools'},
+  {id: '2', title: 'General'},
+  {id: '3', title: 'Microsoft Viva Topics and Sharepoint'},
+  {id: '4', title: 'Topic generation, curation, and discovery'},
+]
+
+const Fap: FC<IFapProps> = ({}) => {
+  const [items, setItems] = useState<ISPList[]>([])
+  useEffect(() => setItems(list), [])
+  return (<div>
+    <h1>My Test</h1>
+    {items.map(item => <ul className={styles.list}>
+      <li className={styles.listItem}>
+        <span className="ms-font-l">{item.title}</span>
+      </li>
+    </ul>
+    )}
+  </div>)
+}
+export default Fap

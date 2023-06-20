@@ -16,6 +16,7 @@ import { IFapProps } from './components/IFapProps';
 export interface IFapWebPartProps {
   description: string;
   test: boolean;
+  test1: string;
 }
 
 export default class FapWebPart extends BaseClientSideWebPart<IFapWebPartProps> {
@@ -29,6 +30,7 @@ export default class FapWebPart extends BaseClientSideWebPart<IFapWebPartProps> 
       {
         description: this.properties.description,
         test: this.properties.test,
+        test1: this.context.pageContext.web.absoluteUrl,
         isDarkTheme: this._isDarkTheme,
         environmentMessage: this._environmentMessage,
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
@@ -117,7 +119,11 @@ export default class FapWebPart extends BaseClientSideWebPart<IFapWebPartProps> 
                   label: 'Toggle',
                   onText: 'On',
                   offText: 'Off'
-                })
+                }),
+                PropertyPaneTextField('test1', {
+                  label: 'Multi-line Text Field',
+                  multiline: true
+                }),
               ]
             }
           ]
@@ -125,4 +131,34 @@ export default class FapWebPart extends BaseClientSideWebPart<IFapWebPartProps> 
       ]
     };
   }
+
+  // private _getListData(): Promise<ISPLists> {
+  //   return this.context.spHttpClient.get(`${this.context.pageContext.web.absoluteUrl}/_api/web/lists?$filter=Hidden eq false`, SPHttpClient.configurations.v1)
+  //     .then((response: SPHttpClientResponse) => {
+  //       return response.json();
+  //     })
+  //     .catch(() => {});
+  // }
+  // private _renderList(items: ISPList[]): void {
+  //   let html: string = '';
+  //   items.forEach((item: ISPList) => {
+  //     html += `
+  //   <ul class="${styles.list}">
+  //     <li class="${styles.listItem}">
+  //       <span class="ms-font-l">${item.Title}</span>
+  //     </li>
+  //   </ul>`;
+  //   });
+  
+  //   const listContainer: Element = this.domElement.querySelector('#spListContainer');
+  //   listContainer.innerHTML = html;
+  // }
+  // private _renderListAsync(): void {
+  //   this._getListData()
+  //     .then((response) => {
+  //       this._renderList(response.value);
+  //     })
+  //     .catch(() => {});
+  // }
+
 }

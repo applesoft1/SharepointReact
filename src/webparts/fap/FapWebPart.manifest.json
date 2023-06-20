@@ -23,7 +23,8 @@
     "officeFabricIconFontName": "Page",
     "properties": {
       "description": "fap",
-      "test": true
+      "test": true,
+      "test1": "this is my test1 for multiline option",
     }
   }]
 }

@@ -5,4 +5,5 @@ export interface IFapProps {
   hasTeamsContext: boolean;
   userDisplayName: string;
   test: boolean;
+  test1: string;
 }
